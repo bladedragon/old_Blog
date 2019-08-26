@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.loli.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon1.png?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hello World!" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="jsoup是一个用于处理真实HTML的Java库。它提供了一个非常方便的API，用于提取和操作数据，使用最好的DOM，CSS和类似jquery的方法。">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用java优雅爬虫——Jsoup">
+<meta property="og:url" content="http://yoursite.com/2019/05/19/love/index.html">
+<meta property="og:site_name" content="Hello World!">
+<meta property="og:description" content="jsoup是一个用于处理真实HTML的Java库。它提供了一个非常方便的API，用于提取和操作数据，使用最好的DOM，CSS和类似jquery的方法。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/love/love_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/love/love_3.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/love/love_4.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/love/love_5.png">
+<meta property="og:updated_time" content="2019-07-18T01:16:41.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用java优雅爬虫——Jsoup">
+<meta name="twitter:description" content="jsoup是一个用于处理真实HTML的Java库。它提供了一个非常方便的API，用于提取和操作数据，使用最好的DOM，CSS和类似jquery的方法。">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/19/love/love_2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/15/2019 11:30:00',
+    onlineAPI: '',
+    site: {
+      title: 'Hello World!',
+      subtitle: '',
+      author: '陌花 采撷'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: true,
+      appID: 'dTfoweWyLJr7wTEW4CUhKHJQ-gzGzoHsz',
+      appKey: 'xh7FpohCp7PmwlHYAyqSaXov'
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon1.png',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/19/love/">
+
+
+
+
+
+  <title>用java优雅爬虫——Jsoup | Hello World!</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+  <script type="text/javascript" src="/aplayer_dist/APlayer.min.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            主页
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-cutlery"></i> <br>
+            
+            标签
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-实验室">
+          <a href="javascript:;" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br>
+            
+            实验室
+          </a>
+          
+            <ul class="submenu submenu-实验室">
+              
+                
+                <li class="submenu-item submenu-item-oldblog">
+                  <a href="http://120.77.150.210:85/wordpress/" rel="section" target="_blank">
+                    OldBlog
+                  </a>
+                </li>
+              
+                
+                <li class="submenu-item submenu-item-prizetool">
+                  <a href="http://zblade.top/dist/index.html" rel="section" target="_blank">
+                    PrizeTool
+                  </a>
+                </li>
+              
+                
+                <li class="submenu-item submenu-item-zshort">
+                  <a href="http://120.77.150.210:8081/ZShort.html" rel="section" target="_blank">
+                    Zshort
+                  </a>
+                </li>
+              
+                
+                <li class="submenu-item submenu-item-zyunpan">
+                  <a href="javascript:;" rel="section" target="_blank">
+                    ZYunPan
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-留言板">
+          <a href="/message/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-pencil"></i> <br>
+            
+            留言板
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rocket"></i> <br>
+            
+            关于我
+          </a>
+          
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+      <!--<li class="menu-item online"><span id="online-count">?</span>人在线</li>-->
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/zheader.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>H</span><span>e</span><span>l</span><span>l</span><span>o</span><span> </span><span>W</span><span>o</span><span>r</span><span>l</span><span>d</span><span>!</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>H</span><span>e</span><span>l</span><span>l</span><span>o</span><span> </span><span>W</span><span>o</span><span>r</span><span>l</span><span>d</span><span>!</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-master-avatar" itemprop="image" src="/images/zavatar.jpg" alt="陌花 采撷">
+    <h2 class="site-master-description" itemprop="description">
+        <span style="text-shadow:1px 1px 2px;font-size:25px;color:#FF8C8C;font-family:SimSun">隐约雷鸣，阴霾天空，</span><span style="text-shadow:1px 1px 2px;font-size:25px;color:#FF8C8C;font-family:SimSun">即使天无雨，吾亦留此地</span>
+    </h2>
+</div>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">05月</div>
+			<div class="post-day">19</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/学习总结/" itemprop="url" rel="index">
+          <span itemprop="name">学习总结</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/19/love/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陌花 采撷">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/zavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello World!">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">用java优雅爬虫——Jsoup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-19T23:18:04+08:00">
+                2019-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习总结/" itemprop="url" rel="index">
+                    <span itemprop="name">学习总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/19/love/" class="leancloud_visitors" data-flag-title="用java优雅爬虫——Jsoup">
+               <span class="post-meta-divider">•</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">•</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>jsoup是一个用于处理真实HTML的Java库。它提供了一个非常方便的API，用于提取和操作数据，使用最好的DOM，CSS和类似jquery的方法。</p>
+<a id="more"></a>
+
+<h3 id="一、目录"><a href="#一、目录" class="headerlink" title="一、目录"></a>一、目录</h3><ol>
+<li><p>jsoup概述</p>
+</li>
+<li><p>使用场景</p>
+<p>DOM解析</p>
+<p>CSS选择器</p>
+<p>HTML过滤</p>
+</li>
+<li><p>逻辑分析</p>
+</li>
+<li><p>总结</p>
+</li>
+</ol>
+<h3 id="二、jsoup概述"><a href="#二、jsoup概述" class="headerlink" title="二、jsoup概述"></a>二、jsoup概述</h3><p>官方解释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsoup是一个用于处理真实HTML的Java库。它提供了一个非常方便的API，用于提取和操作数据，使用最好的DOM，CSS和类似jquery的方法。</span><br></pre></td></tr></table></figure>
+
+<p>个人接触到Jsoup是在用java写爬虫时，苦恼于大量使用正则匹配不仅降低了代码的可读性，相对也比较费时费力。这时候，一款爬虫框架突然引入眼帘，那就是jsoup。作为一款轻量，功能强大的爬虫框架，jsoup让简单抓取网页信息变得优雅，便捷。</p>
+<p>虽然是一个java库，但是它的使用逻辑却无比接近于jQuery，以至于只要是熟悉或是了解JQuery的人可以轻而易举地上手这款框架。</p>
+<h3 id="三、使用场景"><a href="#三、使用场景" class="headerlink" title="三、使用场景"></a>三、使用场景</h3><h4 id="DOM解析"><a href="#DOM解析" class="headerlink" title="DOM解析"></a>DOM解析</h4><p>jsoup的dom解析异常简单吗，只需要new一个ducumnet对象即可实现获取这个网页元素，接下来以解析一个网页为例。可以看到，将网页转化成ducument类，之后的Element类以及其子类都可以看成是一个个节点，通过调用相关方法实现整个文件节点的遍历。同时，Element类的getElementByTag让人很容易联想到js中的相关方法，因此只要有点JS基础和java基础的人看这段代码都不会觉得陌生。</p>
+<p>这里以查询学生成绩信息为例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">jsoupTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getGrade</span><span class="params">(String stu_num, String id_num)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        String testURL = <span class="string">"http://jwc.cqupt.edu.cn/showS tuQmcj.php"</span>;  <span class="comment">//目标网页</span></span><br><span class="line">        Connection con = Jsoup.connect(testURL);                    <span class="comment">//获取连接</span></span><br><span class="line">        con.data(<span class="string">"xh"</span>, stu_num);                                <span class="comment">//填写参数</span></span><br><span class="line">        con.data(<span class="string">"sfzh"</span>, id_num);</span><br><span class="line">        Document document = con.post();                         <span class="comment">//选择发送方式,获取整个网页信息，存在documnet类里</span></span><br><span class="line"></span><br><span class="line">        Element pTable = document.body().getElementsByClass(<span class="string">"pTable"</span>).get(<span class="number">0</span>);   <span class="comment">//通过class属性 ，获取子类元素</span></span><br><span class="line">        ;</span><br><span class="line">        Elements trs = pTable.getElementsByTag(<span class="string">"tbody"</span>).get(<span class="number">0</span>).children();</span><br><span class="line"></span><br><span class="line">        trs.forEach(tr -&gt; &#123;                                                               <span class="comment">//遍历&lt;tr&gt;标签</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!tr.children().isEmpty()) &#123;</span><br><span class="line">                Element element = tr.getElementsByTag(<span class="string">"td"</span>).get(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (!element.text().equals(<span class="string">"课程类型"</span>)) &#123;</span><br><span class="line">                    GradeInfo gradeInfo = <span class="keyword">new</span> GradeInfo();</span><br><span class="line">                    gradeInfo.setProperty(tr.getElementsByTag(<span class="string">"td"</span>).get(<span class="number">0</span>).text());</span><br><span class="line">                    String term = tr.getElementsByTag(<span class="string">"td"</span>).get(<span class="number">1</span>).text();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                    System.out.println(term);</span><br><span class="line">                    System.out.println(tr.getElementsByTag(<span class="string">"td"</span>).get(<span class="number">2</span>).text());</span><br><span class="line">                    System.out.println(tr.getElementsByTag(<span class="string">"td"</span>).get(<span class="number">5</span>).text());</span><br><span class="line">                    System.out.println(tr.getElementsByTag(<span class="string">"td"</span>).get(<span class="number">6</span>).text());</span><br><span class="line">                    System.out.println(tr.getElementsByTag(<span class="string">"td"</span>).get(<span class="number">7</span>).text());</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        jsoupTest jsouptest = <span class="keyword">new</span> jsoupTest();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            jsouptest.getGrade(<span class="string">"2017210246"</span>, <span class="string">"010033"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="/2019/05/19/love/love_2.png" alt="img"></p>
+<p>只需要几行就可以完成对html的基本解析，而且所有的操作都可以用js的逻辑解释。或多或少比原生正则匹配要实用地多。</p>
+<h4 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h4><p>jsoup决心是想向前端靠齐了，除了基本的DOM解析操作外，它同时加入了CSS选择器，这个操作乍一看似乎没什么用处，但是当你真正去学习如何使用后你的就会发现这是多少好用。在针对较复杂地语句匹配时，使用选择器可以轻而易举地筛选出你想要的元素，可以帮你节省大量代码。</p>
+<p>使用方法：可以用<code>Element.select(String selector)</code>和<code>Element.select(String selector)</code>实现.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getBySelect</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">       String testURL = <span class="string">"&lt;html&gt;"</span> +</span><br><span class="line">               <span class="string">"&lt;head&gt;&lt;/head&gt;"</span>+</span><br><span class="line">               <span class="string">"&lt;body&gt;"</span>+<span class="string">"&lt;span id=\"grade\"&gt;成绩&lt;/span&gt;"</span>+<span class="string">"&lt;span id = \"subject\"&gt;课程&lt;/span&gt;"</span>+<span class="string">"&lt;span id = \"name\"&gt;姓名&lt;/span&gt;"</span>+<span class="string">"&lt;span id = \"stunum\"&gt;学号&lt;/span&gt;"</span>+</span><br><span class="line">               <span class="string">"&lt;span class = \"score\"&gt;85&lt;/span &gt;"</span>+<span class="string">"&lt;span class = \"class\"&gt;语文&lt;/span&gt;"</span>+<span class="string">"&lt;span class = \"stuname\"&gt;小明&lt;/span class = \"number\"&gt;"</span>+<span class="string">"&lt;span&gt;201721001&lt;/span&gt;"</span>+</span><br><span class="line">               <span class="string">"&lt;span id=\"grade\"&gt;80&lt;/span&gt;"</span>+<span class="string">"&lt;span id = \"subject\"&gt;数学&lt;/span&gt;"</span>+<span class="string">"&lt;span id = \"name\"&gt;小明&lt;/span&gt;"</span>+<span class="string">"&lt;span id = \"stunum\"&gt;2017210001&lt;/span&gt;"</span>+</span><br><span class="line">               <span class="string">"&lt;/body&gt;&lt;/html&gt;"</span>;  <span class="comment">//利用字符串拼接出HTML标签</span></span><br><span class="line">                     <span class="comment">//获取连接</span></span><br><span class="line"></span><br><span class="line">       Document document = Jsoup.parse(testURL);                         <span class="comment">//将HTML转化成可遍历地document类</span></span><br><span class="line">       Elements elements = document.select(<span class="string">"span:matchesOwn(^8)"</span>);</span><br><span class="line">       <span class="keyword">for</span> (Element element:</span><br><span class="line">            elements) &#123;</span><br><span class="line">           System.out.println(elements.text());</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="/2019/05/19/love/love_3.png" alt="img"></p>
+<p>CSS选择器类似于JQuery和CSS中使用的选择器，可以通过特定的选择器语法将对指定元素进行筛选</p>
+<p>对于选择器的筛选，这里推荐一篇文章：<a href="https://blog.csdn.net/yueshutong123/article/details/81226430?utm_source=blogxgwz0" target="_blank" rel="noopener">详解JSOUP的Select选择器语法</a></p>
+<h4 id="HTML过滤"><a href="#HTML过滤" class="headerlink" title="HTML过滤"></a>HTML过滤</h4><p>这个功能也是偶然看见的，不过现在想来也理所当然，过滤网页信息本身就是Jsoup分内的事。当时正在看XSS攻击方面的知识，突然发现jsoup在安全方面已早有考虑，已本身优秀的HTML解析为基础，抵御XSS攻击自然也是十分优秀。</p>
+<p>XSS注入本质就是在HTML中插入特定的标签改变原来标签的含义，因此防止XSS攻击的本质是能分辨并及时过滤掉多余或是无效的HTML标签。对此，jsoup有一个白名单机制，通过clean方法可以一步通过白名单设置的过滤规则清理所有的标签，同时也会保留适当标签和禁止图片显示的功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * xss过滤</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JsoupUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用自带的basicWithImages 白名单</span></span><br><span class="line"><span class="comment">     * 允许的便签有a,b,blockquote,br,cite,code,dd,dl,dt,em,i,li,ol,p,pre,q,small,span,</span></span><br><span class="line"><span class="comment">     * strike,strong,sub,sup,u,ul,img</span></span><br><span class="line"><span class="comment">     * 以及a标签的href,img标签的src,align,alt,height,width,title属性</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Whitelist whitelist = Whitelist.basicWithImages();</span><br><span class="line">    <span class="comment">/** 配置过滤化参数,不对代码进行格式化 */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Document.OutputSettings outputSettings = <span class="keyword">new</span> Document.OutputSettings().prettyPrint(<span class="keyword">false</span>);</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// 富文本编辑时一些样式是使用style来进行实现的</span></span><br><span class="line">        <span class="comment">// 比如红色字体 style="color:red;"</span></span><br><span class="line">        <span class="comment">// 所以需要给所有标签添加style属性</span></span><br><span class="line">        whitelist.addAttributes(<span class="string">":all"</span>, <span class="string">"style"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">clean</span><span class="params">(String content)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Jsoup.clean(content, <span class="string">""</span>, whitelist, outputSettings);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, IOException </span>&#123;</span><br><span class="line">        String text = <span class="string">"&lt;a href=\"http://www.baidu.com/a\" onclick=\"alert(1);\"&gt;sss&lt;/a&gt;&lt;script&gt;alert(0);&lt;/script&gt;sss"</span>;</span><br><span class="line">        System.out.println(clean(text));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、逻辑分析"><a href="#四、逻辑分析" class="headerlink" title="四、逻辑分析"></a>四、逻辑分析</h3><p>jsoup作为一款轻便的爬虫框架，全部由Jonathan Hedley独立写出，因此代码相比其他一些笨重的框架要简洁很多，我通过网上一些解析jsoup源码的博客，加深对jsoup的理解。废话不多说，让我们看看jsoup的魅力吧！</p>
+<p><img src="/2019/05/19/love/love_4.png" alt="img"></p>
+<p>借用别人博客里整理的图片，可以看到，让java能像js那样使用类似标签的嵌套存储的方法就是在这里就是利用自定义的node抽象类，将属性存储在类似树状的结构中这，这样做不仅有利于之后的DOM树解析，也容易遍历，有利于性能的提高。</p>
+<p>我们再看看CSS选择器的实现逻辑。这是selector的源码列表</p>
+<p><img src="/2019/05/19/love/love_5.png" alt="img"></p>
+<p>jsoup在关于selector的实现大致是利用Evaluator抽象类，Selector选择的表达式都会通过QueryParser最终编译到对应的Evaluator类上，然后此类又有很多派生子类，从而分别实现不同功能。逻辑思路还算简单，但是具体代码我还不曾仔细研读，因此在此也不再赘述。不过其中进行嵌套实现对象的思路还是值得借鉴的。</p>
+<p>在HTML过滤方面，jsoup防止XSS攻击的大致策略是</p>
+<ol>
+<li>将HTMl字符串解析成document对象，这样保证了无法通过注入一段无用的脚本和字符串拼接导致网页的功能发生了改变</li>
+<li>将一些高频出现的危险系数较高的标签加入白名单进行提前过滤</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>jsoup在操作便捷度上已经展现了它的实力，但是在性能上，考虑到它的底层还是通过正则进行匹配，因此对于一些一些简单的HTML解析或许直接正则的最快的；但是，当HTML页面比较复杂，这便是jsoup大显身手的时候了。</p>
+<p>但是jsoup还是有很多不足，例如</p>
+<ol>
+<li>只能处理静态页面，对于动态显示或者后端渲染后后的页面无法正常进行爬取，这时就需要利用其他的工具例如httpunit进行模拟的ajax请求。</li>
+<li>jsoup总归还只是个人项目，在后期的维护方面还是存在一定的不确定性，如果需要用应用在一些大型的长久性的项目中还需三思。</li>
+<li>jsoup的底层实现还是正则匹配，尽管jsoup本身够轻量，但它依然需要解析整个HTML，再进行进一步的搜索，因此在一些简单的网页解析中，肯定还是直接上正则来的直接来的方便。但是如果网页的结构足够复杂，使用正则的的代码量巨大，那么jsoup不失为一个不错的选择。</li>
+</ol>
+<p>总而言之，jsoup作为一款轻量的爬虫框架，在HTML解析方面的表现还是很不错的，如果平时希望偷点懒，节省点时间和代码量，完全推荐大家使用。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/15/test/" rel="next" title="测试文章">
+                <i class="fa fa-chevron-left"></i> 测试文章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/03/hello-hexo/" rel="prev" title="Hexo入门搭建">
+                Hexo入门搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="vcomments"></div>
+    </div>
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/zcard.jpg" alt="陌花 采撷">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.7;">陌花采撷</span></p>
+              <p class="site-description motion-element" itemprop="description">“半世浮萍随逝水，一宵冷雨葬名花”</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bladedragon" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                       <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:zaft1156673039@gmail.com" target="_blank" title="E-Mail" data-balloon="E-Mail" data-balloon-pos="up">
+                    
+                       <i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+            <div class="feed-link motion-element">
+              
+              <a class="feed-rss" href="/atom.xml" rel="alternate" target="_blank">
+                <i class="fa fa-rss"></i>
+                <span>RSS 订阅</span>
+              </a>
+            </div>
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、目录"><span class="nav-number">1.</span> <span class="nav-text">一、目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、jsoup概述"><span class="nav-number">2.</span> <span class="nav-text">二、jsoup概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、使用场景"><span class="nav-number">3.</span> <span class="nav-text">三、使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DOM解析"><span class="nav-number">3.1.</span> <span class="nav-text">DOM解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSS选择器"><span class="nav-number">3.2.</span> <span class="nav-text">CSS选择器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTML过滤"><span class="nav-number">3.3.</span> <span class="nav-text">HTML过滤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、逻辑分析"><span class="nav-number">4.</span> <span class="nav-text">四、逻辑分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Hello World!.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    <a href="/" target="_blank">站点地图</a>.
+    .
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">陌花 采撷</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou"></canvas>
+	<link rel="stylesheet" href="/aplayer_dist/APlayer.min.css">
+	<div id="aplayer-fixed"></div>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+<link rel="stylesheet" href="/dplayer_dist/DPlayer.min.css">
+<div id="dplayer"></div>
+<script src="/dplayer_dist/DPlayer.min.js"></script>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+  <script type="text/javascript" src="/js/src/cursor-effects.js"></script>
+  <script type="text/javascript" src="/js/src/affix.js"></script>
+ 
+ 
+
+
+<script type="text/javascript" src="/dplayer_dist/DPlayer.min.js"></script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  
+</body>
+</html>

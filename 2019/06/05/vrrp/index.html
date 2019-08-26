@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.loli.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon1.png?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ICT,网络工程,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hello World!" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="背景随着移动办公、网上购物、即时通讯、互联网金融、互联网教育等业务蓬勃发展，网络承载的业务越来越多，越来越重要。所以如何保证网络的不间断传输成为网络发展过程中急需解决的一个问题。 对此，其中一种解决方案是，使用一套使用一套冗余备份机制，避免传统组网引发的单点故障，以便在路由器出现故障的时候及时进行链路切换，保证业务平滑进行。">
+<meta name="keywords" content="ICT,网络工程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VRRP入门">
+<meta property="og:url" content="http://yoursite.com/2019/06/05/vrrp/index.html">
+<meta property="og:site_name" content="Hello World!">
+<meta property="og:description" content="背景随着移动办公、网上购物、即时通讯、互联网金融、互联网教育等业务蓬勃发展，网络承载的业务越来越多，越来越重要。所以如何保证网络的不间断传输成为网络发展过程中急需解决的一个问题。 对此，其中一种解决方案是，使用一套使用一套冗余备份机制，避免传统组网引发的单点故障，以便在路由器出现故障的时候及时进行链路切换，保证业务平滑进行。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/06/05/vrrp/vrrp_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/05/vrrp/1559704314623.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/05/vrrp/1559707111077.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/05/vrrp/1559707202844.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/05/vrrp/1559707907266.png">
+<meta property="og:updated_time" content="2019-07-26T14:13:41.474Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VRRP入门">
+<meta name="twitter:description" content="背景随着移动办公、网上购物、即时通讯、互联网金融、互联网教育等业务蓬勃发展，网络承载的业务越来越多，越来越重要。所以如何保证网络的不间断传输成为网络发展过程中急需解决的一个问题。 对此，其中一种解决方案是，使用一套使用一套冗余备份机制，避免传统组网引发的单点故障，以便在路由器出现故障的时候及时进行链路切换，保证业务平滑进行。">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/05/vrrp/vrrp_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/15/2019 11:30:00',
+    onlineAPI: '',
+    site: {
+      title: 'Hello World!',
+      subtitle: '',
+      author: '陌花 采撷'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: true,
+      appID: 'dTfoweWyLJr7wTEW4CUhKHJQ-gzGzoHsz',
+      appKey: 'xh7FpohCp7PmwlHYAyqSaXov'
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon1.png',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/05/vrrp/">
+
+
+
+
+
+  <title>VRRP入门 | Hello World!</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+  <script type="text/javascript" src="/aplayer_dist/APlayer.min.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            主页
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-cutlery"></i> <br>
+            
+            标签
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-实验室">
+          <a href="javascript:;" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br>
+            
+            实验室
+          </a>
+          
+            <ul class="submenu submenu-实验室">
+              
+                
+                <li class="submenu-item submenu-item-oldblog">
+                  <a href="http://120.77.150.210:85/wordpress/" rel="section" target="_blank">
+                    OldBlog
+                  </a>
+                </li>
+              
+                
+                <li class="submenu-item submenu-item-prizetool">
+                  <a href="http://zblade.top/dist/index.html" rel="section" target="_blank">
+                    PrizeTool
+                  </a>
+                </li>
+              
+                
+                <li class="submenu-item submenu-item-zshort">
+                  <a href="http://120.77.150.210:8081/ZShort.html" rel="section" target="_blank">
+                    Zshort
+                  </a>
+                </li>
+              
+                
+                <li class="submenu-item submenu-item-zyunpan">
+                  <a href="javascript:;" rel="section" target="_blank">
+                    ZYunPan
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-留言板">
+          <a href="/message/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-pencil"></i> <br>
+            
+            留言板
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rocket"></i> <br>
+            
+            关于我
+          </a>
+          
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+      <!--<li class="menu-item online"><span id="online-count">?</span>人在线</li>-->
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/zheader.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>H</span><span>e</span><span>l</span><span>l</span><span>o</span><span> </span><span>W</span><span>o</span><span>r</span><span>l</span><span>d</span><span>!</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>H</span><span>e</span><span>l</span><span>l</span><span>o</span><span> </span><span>W</span><span>o</span><span>r</span><span>l</span><span>d</span><span>!</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-master-avatar" itemprop="image" src="/images/zavatar.jpg" alt="陌花 采撷">
+    <h2 class="site-master-description" itemprop="description">
+        <span style="text-shadow:1px 1px 2px;font-size:25px;color:#FF8C8C;font-family:SimSun">隐约雷鸣，阴霾天空，</span><span style="text-shadow:1px 1px 2px;font-size:25px;color:#FF8C8C;font-family:SimSun">即使天无雨，吾亦留此地</span>
+    </h2>
+</div>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">06月</div>
+			<div class="post-day">05</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        <a href="/categories/学习总结/" itemprop="url" rel="index">
+          <span itemprop="name">学习总结</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/05/vrrp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陌花 采撷">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/zavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello World!">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">VRRP入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-05T10:01:56+08:00">
+                2019-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习总结/" itemprop="url" rel="index">
+                    <span itemprop="name">学习总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/05/vrrp/" class="leancloud_visitors" data-flag-title="VRRP入门">
+               <span class="post-meta-divider">•</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">•</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>随着移动办公、网上购物、即时通讯、互联网金融、互联网教育等业务蓬勃发展，网络承载的业务越来越多，越来越重要。所以如何保证网络的不间断传输成为网络发展过程中急需解决的一个问题。</p>
+<p>对此，其中一种解决方案是，使用一套使用一套冗余备份机制，避免传统组网引发的单点故障，以便在路由器出现故障的时候及时进行链路切换，保证业务平滑进行。</p>
+<a id="more"></a>
+
+<p>传统解决方案</p>
+<ol>
+<li>配备多台路由器解决单点故障</li>
+<li>使用动态路由协议解决多网关冲突，实现链路回切</li>
+</ol>
+<p>但是传统方案依然存在几个问题</p>
+<ol>
+<li>一些动态路由协议使用广播报文进行链路切换速度上比较缓慢</li>
+<li>在许多情景下可能会不支持使用动态路由</li>
+</ol>
+<p>于是，VRRP应运而生。</p>
+<h2 id="VRRP的基本概念"><a href="#VRRP的基本概念" class="headerlink" title="VRRP的基本概念"></a>VRRP的基本概念</h2><p><strong>VRRP</strong></p>
+<blockquote>
+<p>虚拟路由冗余协议(Virtual Router Redundancy Protocol，简称VRRP)是由IETF提出的解决局域网中配置静态网关出现单点失效现象的路由协议。</p>
+<p>VRRP能够在不改变组网的情况下，将多台路由器虚拟成一个虚拟路由器，通过配置虚拟路由器的IP地址为默认网关，实现网关的备份</p>
+</blockquote>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>采用VRRP的链路保护机制比依赖动态路由协议的广播报文来进行链路切换的时间更短，同时弥补了不能使用动态路由情况下的链路保护。</p>
+<h3 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h3><p><img src="/2019/06/05/vrrp/vrrp_1.png" alt="1559704280150"></p>
+<ul>
+<li><p>VRRP路由器：运行VRRP的设备，它可能属于一个或多个虚拟路由器。</p>
+</li>
+<li><p>虚拟路由器(备份组):同一个广播域的一组路由器组织成一个虚拟路由器，备份组中的所有路由器一起，共同提供一个虚拟IP地址，作为内部网络的网关地址。</p>
+</li>
+<li><p>虚拟IP地址：虚拟路由器的IP地址，一个虚拟路由器可以有一个或多个IP地址，由用户配置。</p>
+</li>
+<li><p>IP地拥有者:如果一个VRRP路由器将虚拟路由器的IP地址作为真实的接口地址，则该设备是IP地址拥有者。</p>
+</li>
+<li><p>虚拟MAC地址：是虚拟路由器根据虚拟路由器ID生成的MAC地址。 当虚拟路由器回应ARP请求时，使用虚拟MAC地址，而不是接口的真实MAC地址。</p>
+</li>
+<li><p>主IP地址：从接口的真实IP地址中选出来的一个主用IP地址，通常选择配置的第一个IP地址。<br>VRRP广播报文使用主IP地址作为IP报文的源地址。 </p>
+</li>
+<li><p>主（Master）路由器：在同一个备份组中的多个路由器中，只有一台处于活动状态，只有主路由器能转发以虚拟IP地址作为下一跳的报文。</p>
+</li>
+<li><p>备份（Backup）路由器：在同一个备份组中的多个路由器中，除主路由器外，其他路由器均为备份路由器，处于备份状态。</p>
+</li>
+</ul>
+<p><strong>状态机</strong></p>
+<ul>
+<li>VRRP有三种状态：初始状态、活动状态、备份状态.其状态切换过程如下：</li>
+</ul>
+<p><img src="/2019/06/05/vrrp/1559704314623.png" alt="1559704314623"></p>
+<p><strong>协议报文</strong></p>
+<p>vrrp只有一种报文：Advertisement报文；其目的IP地址是224.0.0.18（组播地址），目的MAC地址是01-00-5e-00-00-12，协议号是112</p>
+<p>下面介绍vrrp的两种主要的工作模式：主备备份和负载分担</p>
+<h2 id="VRRP主备备份"><a href="#VRRP主备备份" class="headerlink" title="VRRP主备备份"></a>VRRP主备备份</h2><h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><h4 id="选举master"><a href="#选举master" class="headerlink" title="选举master"></a>选举master</h4><p>选举规则：1. 比较优先级 2. 优先级相同的时候，存在master则保持master状态 3. 没有master则比较接口IP地址，大的当选master</p>
+<h4 id="备份组状态维持"><a href="#备份组状态维持" class="headerlink" title="备份组状态维持"></a>备份组状态维持</h4><ol>
+<li>master周期性发送vrrp通告报文给组内设备，从而通知自己处于正常状态</li>
+<li>主备切换 条件：1. master主动放弃，发送优先级为0的通告报文 2. master故障，等待Master_Down_Interval定时器超时，选举产生master。这个 切换时间叫Skew_Time，计算方式（256－Backup设备的优先级）/256（单位秒）</li>
+<li>Master_Down_Interval定时器取值：<code>3×Advertisement_Interval＋Skew_Time</code>（单位秒）。</li>
+</ol>
+<h4 id="主备回切"><a href="#主备回切" class="headerlink" title="主备回切"></a>主备回切</h4><ol>
+<li><p>如果原故障master路由器恢复，发现收到RouterB的VRRP报文中的优先级比自己低，RouterA立即抢占成为Master。</p>
+<p>抢占模式：</p>
+<ul>
+<li>默认高优先级backup路由器可以抢占低优先级master路由器位置，但是如果IP地址拥有者是可用的，则它总是处于抢占的状态，并成为Master设备</li>
+<li>注意抢占延时，默认为0，但是为了防止在网络不稳定的情况下频繁切换导致流量中断，可以设置延时时间稍长</li>
+</ul>
+</li>
+<li><p>注意：如果VRRP的上行链路故障，由于主备通告正常，将无法引起主备切换</p>
+<p>解决方法：利用VRRP的联动功能监视上行接口或链路故障，主动进行主备切换。</p>
+</li>
+</ol>
+<p><img src="/2019/06/05/vrrp/1559707111077.png" alt="1559707111077"></p>
+<h2 id="VRRP负载分担"><a href="#VRRP负载分担" class="headerlink" title="VRRP负载分担"></a>VRRP负载分担</h2><ul>
+<li>负载分担是指多个VRRP备份组同时承担业务转发,从而解决流量分担不均，master负担过重的情况</li>
+<li>负载分担方式需要建立多个VRRP备份组，各备份组的Master设备分担在不同设备上；单台设备可以加入多个备份组，在不同的备份组中扮演不同的角色。</li>
+</ul>
+<p><img src="/2019/06/05/vrrp/1559707202844.png" alt="1559707202844"></p>
+<h2 id="VGMP简介"><a href="#VGMP简介" class="headerlink" title="VGMP简介"></a>VGMP简介</h2><p>VRRP虽然可以解决单点故障，实现主备备份，但是在配置防火墙的时候，由于防火墙功能的特殊性，在对其进行主备备份时，传统VRRP方式无法实现主、备用防火墙状态的一致性。无法实现VRRP状态一致性以及会话表状态的备份</p>
+<p>此时，我们需要引入<strong>VGMP</strong>（VRRP Group Management Protocol）</p>
+<p>VGMP提出VRRP管理组的概念，将同一台防火墙上的多个VRRP备份组都加入到一个VRRP管理组，由管理组统一管理所有VRRP备份组。通过统一控制各VRRP备份组状态的切换，来保证管理组内的所有VRRP备份组状态都是一致的。</p>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><ul>
+<li>当防火墙上的VGMP为Active/Standby状态时，组内所有VRRP备份组的状态统一为Active/Standby状态。</li>
+<li>状态为Active的VGMP也会定期向对端发送HELLO报文，通知Standby端本身的运行状态（包括优先级、VRRP成员状态等）</li>
+<li>VGMP HELLO报文发送周期缺省为1秒。当Standby端三个HELLO报文周期没有收到对端发送的HELLO报文时，会认为对端出现故障，从而将自己切换到Active状态。</li>
+</ul>
+<p><img src="/2019/06/05/vrrp/1559707907266.png" alt="1559707907266"></p>
+<h4 id="VGMP管理机制"><a href="#VGMP管理机制" class="headerlink" title="VGMP管理机制"></a>VGMP管理机制</h4><p><strong>状态一致性管理</strong></p>
+<p>VGMP管理组控制所有的VRRP备份组统一切换。</p>
+<p><strong>抢占管理</strong></p>
+<p>当原来出现故障的主设备故障恢复时，其优先级也会恢复，此时可以重新将自己的状态抢占为主。</p>
+<p>用VGMP实现防火墙的备份以及故障自动迁移从而保证业务连续性的方法也属于防火墙的双机热备技术的一部分，因为篇幅有限，这里不再展开。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>今天我们从现实一个问题作为切入点，简单介绍了利用VRRP做路由冗余备份，同时针对防火墙的特性，引申出VGMP的概念，也算是揭开了防火墙神秘面纱的一角。网络安全越来越成为我们生活中不可忽视的一部分，对于安全方面知识，下次有机会我们再继续讲述吧。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ICT/" rel="tag"><i class="fa fa-tag"></i> ICT</a>
+          
+            <a href="/tags/网络工程/" rel="tag"><i class="fa fa-tag"></i> 网络工程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/03/hello-hexo/" rel="next" title="Hexo入门搭建">
+                <i class="fa fa-chevron-left"></i> Hexo入门搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/14/shiwu/" rel="prev" title="数据库事务初识">
+                数据库事务初识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="vcomments"></div>
+    </div>
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/zcard.jpg" alt="陌花 采撷">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.7;">陌花采撷</span></p>
+              <p class="site-description motion-element" itemprop="description">“半世浮萍随逝水，一宵冷雨葬名花”</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bladedragon" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                       <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:zaft1156673039@gmail.com" target="_blank" title="E-Mail" data-balloon="E-Mail" data-balloon-pos="up">
+                    
+                       <i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+            <div class="feed-link motion-element">
+              
+              <a class="feed-rss" href="/atom.xml" rel="alternate" target="_blank">
+                <i class="fa fa-rss"></i>
+                <span>RSS 订阅</span>
+              </a>
+            </div>
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRRP的基本概念"><span class="nav-number">2.</span> <span class="nav-text">VRRP的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优势"><span class="nav-number">2.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#名词解释"><span class="nav-number">2.2.</span> <span class="nav-text">名词解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRRP主备备份"><span class="nav-number">3.</span> <span class="nav-text">VRRP主备备份</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过程"><span class="nav-number">3.1.</span> <span class="nav-text">过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#选举master"><span class="nav-number">3.1.1.</span> <span class="nav-text">选举master</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#备份组状态维持"><span class="nav-number">3.1.2.</span> <span class="nav-text">备份组状态维持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主备回切"><span class="nav-number">3.1.3.</span> <span class="nav-text">主备回切</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRRP负载分担"><span class="nav-number">4.</span> <span class="nav-text">VRRP负载分担</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VGMP简介"><span class="nav-number">5.</span> <span class="nav-text">VGMP简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本原理"><span class="nav-number">5.1.</span> <span class="nav-text">基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VGMP管理机制"><span class="nav-number">5.1.1.</span> <span class="nav-text">VGMP管理机制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Hello World!.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    <a href="/" target="_blank">站点地图</a>.
+    .
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">陌花 采撷</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou"></canvas>
+	<link rel="stylesheet" href="/aplayer_dist/APlayer.min.css">
+	<div id="aplayer-fixed"></div>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+<link rel="stylesheet" href="/dplayer_dist/DPlayer.min.css">
+<div id="dplayer"></div>
+<script src="/dplayer_dist/DPlayer.min.js"></script>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+  <script type="text/javascript" src="/js/src/cursor-effects.js"></script>
+  <script type="text/javascript" src="/js/src/affix.js"></script>
+ 
+ 
+
+
+<script type="text/javascript" src="/dplayer_dist/DPlayer.min.js"></script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  
+</body>
+</html>

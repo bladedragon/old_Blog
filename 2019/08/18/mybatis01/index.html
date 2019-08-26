@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.loli.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/social-share.js/1.0.9/css/share.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon1.png?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,数据库,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hello World!" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="keywords" content="java,数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis深入学习">
+<meta property="og:url" content="http://yoursite.com/2019/08/18/mybatis01/index.html">
+<meta property="og:site_name" content="Hello World!">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/08/18/mybatis01/milky-way-2695569_1920.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/08/18/mybatis01/1566090966352.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/18/mybatis01/1566093841325.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/18/mybatis01/1566098446042.png">
+<meta property="og:updated_time" content="2019-08-18T05:04:56.032Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mybatis深入学习">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/18/mybatis01/milky-way-2695569_1920.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/15/2019 11:30:00',
+    onlineAPI: '',
+    site: {
+      title: 'Hello World!',
+      subtitle: '',
+      author: '陌花 采撷'
+    },
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: true,
+      appID: 'dTfoweWyLJr7wTEW4CUhKHJQ-gzGzoHsz',
+      appKey: 'xh7FpohCp7PmwlHYAyqSaXov'
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon1.png',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/18/mybatis01/">
+
+
+
+
+
+  <title>Mybatis深入学习 | Hello World!</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+  <script type="text/javascript" src="/aplayer_dist/APlayer.min.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            主页
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-cutlery"></i> <br>
+            
+            标签
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-实验室">
+          <a href="javascript:;" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-flask"></i> <br>
+            
+            实验室
+          </a>
+          
+            <ul class="submenu submenu-实验室">
+              
+                
+                <li class="submenu-item submenu-item-oldblog">
+                  <a href="http://120.77.150.210:85/wordpress/" rel="section" target="_blank">
+                    OldBlog
+                  </a>
+                </li>
+              
+                
+                <li class="submenu-item submenu-item-prizetool">
+                  <a href="http://zblade.top/dist/index.html" rel="section" target="_blank">
+                    PrizeTool
+                  </a>
+                </li>
+              
+                
+                <li class="submenu-item submenu-item-zshort">
+                  <a href="http://120.77.150.210:8081/ZShort.html" rel="section" target="_blank">
+                    Zshort
+                  </a>
+                </li>
+              
+                
+                <li class="submenu-item submenu-item-zyunpan">
+                  <a href="javascript:;" rel="section" target="_blank">
+                    ZYunPan
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-留言板">
+          <a href="/message/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-pencil"></i> <br>
+            
+            留言板
+          </a>
+          
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rocket"></i> <br>
+            
+            关于我
+          </a>
+          
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+      <li class="menu-item search">
+          <form class="search-form">
+            <input name="keyword" type="text" class="search-input" placeholder="站内搜索">
+            <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
+          </form>
+      </li>
+      <!--<li class="menu-item online"><span id="online-count">?</span>人在线</li>-->
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url(/images/zheader.jpg)">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>H</span><span>e</span><span>l</span><span>l</span><span>o</span><span> </span><span>W</span><span>o</span><span>r</span><span>l</span><span>d</span><span>!</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>H</span><span>e</span><span>l</span><span>l</span><span>o</span><span> </span><span>W</span><span>o</span><span>r</span><span>l</span><span>d</span><span>!</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-master-avatar" itemprop="image" src="/images/zavatar.jpg" alt="陌花 采撷">
+    <h2 class="site-master-description" itemprop="description">
+        <span style="text-shadow:1px 1px 2px;font-size:25px;color:#FF8C8C;font-family:SimSun">隐约雷鸣，阴霾天空，</span><span style="text-shadow:1px 1px 2px;font-size:25px;color:#FF8C8C;font-family:SimSun">即使天无雨，吾亦留此地</span>
+    </h2>
+</div>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">08月</div>
+			<div class="post-day">18</div>
+	</div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/18/mybatis01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陌花 采撷">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/zavatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello World!">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mybatis深入学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-18T11:27:56+08:00">
+                2019-08-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/08/18/mybatis01/" class="leancloud_visitors" data-flag-title="Mybatis深入学习">
+               <span class="post-meta-divider">•</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">•</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2019/08/18/mybatis01/milky-way-2695569_1920.jpg" alt></p>
+<a id="more"></a>
+
+<h2 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h2><h3 id="简单配置介绍"><a href="#简单配置介绍" class="headerlink" title="简单配置介绍"></a>简单配置介绍</h3><p>简单来说，Mybatis的配置主要分为以下几步（整合Spring之后有些就不需要了，但是一开始学习不建议直接整合Spring）：</p>
+<ul>
+<li><strong>编写POJO即JavaBean，最终的目的是将数据库中的查询结果映射到JavaBean上；</strong></li>
+<li><strong>配置与POJO对应的Mapper接口：里面有各种方法，对应mapper.xml中的查询语句；</strong></li>
+<li><strong>配置与POJO对应的XML映射：编写缓存，SQL查询等；</strong></li>
+<li><strong>配置<code>mybatis-config.xml</code>主要的Mybatis配置文件：配置数据源、扫描mapper.xml等。</strong></li>
+</ul>
+<p>　　注意：以上的配置并没有严格的前后顺序；</p>
+<p>一个比较清晰的配置流程图</p>
+<p><img src="/2019/08/18/mybatis01/1566090966352.png" alt="1566090966352"></p>
+<blockquote>
+<p>可以看出mapper接口实现类的获得是通过mybatis-config.xml-&gt;SqlSessionFactoryBuilder-&gt;SqlSessionFacotry-&gt;SqlSession-&gt;mapper</p>
+</blockquote>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a><strong>生命周期</strong></h3><ol>
+<li><strong>SqlSessionFactoryBuilder</strong>：作用就是创建一个构建器，一旦创建了<code>SqlSessionFactory</code>，它的任务就算完成了，可以回收。</li>
+<li><strong>SqlSessionFactory</strong>：作用是创建<code>SqlSession</code>，而<code>SqlSession</code>相当于JDBC的一个<code>Connection</code>对象，每次应用程序需要访问数据库，我们就要通过<code>SqlSessionFactory</code>创建一个<code>SqlSession</code>，所以<code>SqlSessionFactory</code>在Mybatis整个生命周期中存在<font color="red">（每个数据库对应一个<code>SqlSessionFactory</code>，是单例产生的）</font>。</li>
+<li><strong>SqlSession</strong>：生命周期是存在于请求数据库处理事务的过程中，是一个线程不安全的对象（在多线程的情况下，需要特别注意），即存活于一个应用的请求和申请，可以执行多条SQL保证事务的一致性。</li>
+<li><strong>Mapper</strong>：是一个接口，并没有实现类。它的作用是发送SQL，返回我们需要的结果或者发送SQL修改数据库表，所以它存活于一个<code>SqlSession</code>内，是一个方法级别的东西。当<code>SqlSession</code>销毁的时候，Mapper也会销毁。</li>
+</ol>
+<h3 id="基础特性"><a href="#基础特性" class="headerlink" title="基础特性"></a>基础特性</h3><h4 id="延迟加载"><a href="#延迟加载" class="headerlink" title="延迟加载"></a>延迟加载</h4><p>即系统延迟执行查询，一般用于嵌套查询的时候，嵌套在内的SQL查询会延迟加载，等到真正需要使用该查询的时候才加载。就像懒人你说一下，他动一下，绝不会多执行半步，因此该特性也称之为懒加载。</p>
+<p>懒加载必须配置<code>config.xml</code>，并且只能通过<code>association</code>或<code>collection</code>实现，毕竟只有在存在映射关系的业务场景里你需要使用懒加载</p>
+<p>配置语句</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"lazyLoadingEnabled"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"aggressiveLazyLoading"</span> <span class="attr">value</span>=<span class="string">"false"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用时需要注意延迟加载必须使用resultMap，resultType不具有延迟加载功能。</p>
+<h4 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h4><ul>
+<li>系统默认开启,缓存的范围为一个<code>SqlSession</code></li>
+<li>只有一个SqlSession下的相同查询才会应用缓存，不同sqlSession下的即使查询相同一级缓存也不会生效</li>
+</ul>
+<h4 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h4><ul>
+<li><p>解决<code>SqlSession</code>相互隔离的情况，缓存范围为一个<code>Mapper</code>接口</p>
+</li>
+<li><p>二级缓存默认是不开启的，需要进行配置，Mybatis要求返回的POJO必须是可序列化的，即<font color="red">POJO实现Serializable接口。</font></p>
+</li>
+<li><p>缓存的配置只需要在<code>XML</code>配置<code>&lt;cache/&gt;</code>即可，或者指定算法，刷新时间间隔，缓存状态，大小等</p>
+<blockquote>
+<p>例：<cache eviction="LRU" readonly="true" flushinterval="100000" size="1024"></cache></p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/2019/08/18/mybatis01/1566093841325.png" alt="1566093841325"></p>
+<ul>
+<li>映射语句文件中所有select语句将会被缓存；</li>
+<li>映射语句文件中所有insert、update和delete语句会被刷新缓存；</li>
+<li>缓存使用默认的LRU最近最少使用算法回收；</li>
+<li>根据时间表，缓存不会任何时间顺序刷新</li>
+<li>缓存会存储列表集合或对象的1024个引用</li>
+<li>缓存被视为可read/write的缓存，意味着是不可以被共享的，而可以被安全地修改。</li>
+</ul>
+<h4 id="自定义缓存"><a href="#自定义缓存" class="headerlink" title="自定义缓存"></a>自定义缓存</h4><p>通过Mybatis实现的接口，使用redis等进行缓存</p>
+<h3 id="实践配置"><a href="#实践配置" class="headerlink" title="实践配置"></a>实践配置</h3><p>待补充</p>
+<h2 id="SqlSession原理"><a href="#SqlSession原理" class="headerlink" title="SqlSession原理"></a>SqlSession原理</h2><p><code>SqlSession</code>提供select/insert/update/delete方法</p>
+<p>映射器（<code>Mapper</code>）其实就是一个动态代理对象，进入到<code>MapperMethod</code>的<code>execute</code>方法就能简单找到<code>SqlSession</code>的删除、更新、查询、选择方法.</p>
+<p>从底层实现来说：通过动态代理技术，让接口跑起来，之后采用命令模式，最后还是采用了<code>SqlSession</code>的接口方法（<code>getMapper()</code>方法等到<code>Mapper</code>）执行SQL查询（也就是说Mapper接口方法的实现底层还是采用<code>SqlSession</code>接口方法实现的）。</p>
+<p><strong>SqlSession重要的四个对象</strong></p>
+<ol>
+<li><strong>Execute</strong>：调度执行<code>StatementHandler</code>、<code>ParmmeterHandler</code>、<code>ResultHandler</code>执行相应的SQL语句；</li>
+<li><strong>StatementHandler</strong>：使用数据库中<code>Statement（PrepareStatement）</code>执行操作，即底层是封装好了的<code>prepareStatement</code></li>
+<li><strong>ParammeterHandler</strong>：处理SQL参数</li>
+<li><strong>ResultHandler</strong>：结果集ResultSet封装处理返回。</li>
+</ol>
+<h3 id="SqlSession的四大对象"><a href="#SqlSession的四大对象" class="headerlink" title="SqlSession的四大对象"></a>SqlSession的四大对象</h3><h4 id="Execute"><a href="#Execute" class="headerlink" title="Execute"></a><mark>Execute</mark></h4><p>起java和数据库交互桥梁的作用，参与整个SQL执行过程。<strong>分类</strong></p>
+<ol>
+<li>SIMPLE简易执行器（默认）</li>
+<li>REUSE重用预处理执行器</li>
+<li>BATCH批量更新、批量专用处理器</li>
+</ol>
+<p>源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.ibatis.session;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ExecutorType &#123;</span><br><span class="line">  SIMPLE, REUSE, BATCH</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>作用</strong></p>
+<p>调度其他对象，完成预编译、配置参数和返回结果集</p>
+<h4 id="StatementHanlder"><a href="#StatementHanlder" class="headerlink" title="StatementHanlder"></a><mark>StatementHanlder</mark></h4><p><strong>分类</strong>(分别对应不同执行器)</p>
+<ul>
+<li>SimpleStatementHandler</li>
+<li>PrepareStatementHandler</li>
+<li>CallableStatementHandler</li>
+</ul>
+<p><strong>作用</strong></p>
+<p>专门处理数据库会话。进行预编译并调用ParameterHandler配置参数。大致来讲只是对数据库的连接做了封装</p>
+<p><strong>工作流程</strong></p>
+<ol>
+<li>通过调用<strong>RoutingStatementHandler</strong>对象生成StatemenetHandler</li>
+<li>RoutingStatementHandler查找相应的statementHandler对象</li>
+<li>statementHandler调用数据库的方法</li>
+</ol>
+<h4 id="ParameterHandler"><a href="#ParameterHandler" class="headerlink" title="ParameterHandler"></a><mark>ParameterHandler</mark></h4><p><strong>作用</strong></p>
+<p>对预编译的参数进行设置</p>
+<p><strong>工作流程</strong></p>
+<ol>
+<li>从parameterObject中取到参数，然后使用typeHandler（注册在Configuration中）进行参数处理</li>
+</ol>
+<h4 id="ResultSetHandler"><a href="#ResultSetHandler" class="headerlink" title="ResultSetHandler"></a><mark>ResultSetHandler</mark></h4><p><strong>作用</strong></p>
+<p>组装结果返回结果集</p>
+<h3 id="运行过程总结"><a href="#运行过程总结" class="headerlink" title="运行过程总结"></a>运行过程总结</h3><ol>
+<li><strong>prepare预编译</strong></li>
+<li><strong>parameterize设置参数</strong></li>
+<li><strong>doUpdate/doQuery执行SQL</strong></li>
+</ol>
+<p>神人的总结</p>
+<p><img src="/2019/08/18/mybatis01/1566098446042.png" alt="1566098446042"></p>
+<p>参考链接</p>
+<p><a href="https://www.cnblogs.com/jian0110/p/9387941.html" target="_blank" rel="noopener">Mybatis缓存（1）——–系统缓存及简单配置介绍</a></p>
+<p><a href="https://www.cnblogs.com/jian0110/p/9452592.html" target="_blank" rel="noopener">Mybatis的SqlSession运行原理</a></p>
+<p><a href="https://www.cnblogs.com/sword-successful/p/7400685.html" target="_blank" rel="noopener">MyBatis从入门到放弃六：延迟加载、一级缓存、二级缓存</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div class="post-share">分享到：</div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          
+            <a href="/tags/数据库/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/17/cloudcompute01/" rel="next" title="云计算设备学习">
+                <i class="fa fa-chevron-left"></i> 云计算设备学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="vcomments"></div>
+    </div>
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/zcard.jpg" alt="陌花 采撷">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.7;">陌花采撷</span></p>
+              <p class="site-description motion-element" itemprop="description">“半世浮萍随逝水，一宵冷雨葬名花”</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/bladedragon" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                       <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:zaft1156673039@gmail.com" target="_blank" title="E-Mail" data-balloon="E-Mail" data-balloon-pos="up">
+                    
+                       <i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+            <div class="feed-link motion-element">
+              
+              <a class="feed-rss" href="/atom.xml" rel="alternate" target="_blank">
+                <i class="fa fa-rss"></i>
+                <span>RSS 订阅</span>
+              </a>
+            </div>
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础配置"><span class="nav-number">1.</span> <span class="nav-text">基础配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单配置介绍"><span class="nav-number">1.1.</span> <span class="nav-text">简单配置介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期"><span class="nav-number">1.2.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础特性"><span class="nav-number">1.3.</span> <span class="nav-text">基础特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟加载"><span class="nav-number">1.3.1.</span> <span class="nav-text">延迟加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一级缓存"><span class="nav-number">1.3.2.</span> <span class="nav-text">一级缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二级缓存"><span class="nav-number">1.3.3.</span> <span class="nav-text">二级缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义缓存"><span class="nav-number">1.3.4.</span> <span class="nav-text">自定义缓存</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实践配置"><span class="nav-number">1.4.</span> <span class="nav-text">实践配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SqlSession原理"><span class="nav-number">2.</span> <span class="nav-text">SqlSession原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlSession的四大对象"><span class="nav-number">2.1.</span> <span class="nav-text">SqlSession的四大对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Execute"><span class="nav-number">2.1.1.</span> <span class="nav-text">Execute</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#StatementHanlder"><span class="nav-number">2.1.2.</span> <span class="nav-text">StatementHanlder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ParameterHandler"><span class="nav-number">2.1.3.</span> <span class="nav-text">ParameterHandler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ResultSetHandler"><span class="nav-number">2.1.4.</span> <span class="nav-text">ResultSetHandler</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行过程总结"><span class="nav-number">2.2.</span> <span class="nav-text">运行过程总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> Hello World!.
+    由 <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a> 强力驱动.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a> v0.0.4.
+    <a href="/" target="_blank">站点地图</a>.
+    .
+</p>
+<p>Made with <i class="fa fa-heart throb" style="color: #d43f57;"></i> by <span class="author" itemprop="copyrightHolder">陌花 采撷</span>. </p>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    <canvas id="evanyou"></canvas>
+	<link rel="stylesheet" href="/aplayer_dist/APlayer.min.css">
+	<div id="aplayer-fixed"></div>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+<link rel="stylesheet" href="/dplayer_dist/DPlayer.min.css">
+<div id="dplayer"></div>
+<script src="/dplayer_dist/DPlayer.min.js"></script>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+  <script type="text/javascript" src="/js/src/cursor-effects.js"></script>
+  <script type="text/javascript" src="/js/src/affix.js"></script>
+ 
+ 
+
+
+<script type="text/javascript" src="/dplayer_dist/DPlayer.min.js"></script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+  
+</body>
+</html>
